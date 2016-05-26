@@ -1,5 +1,4 @@
 from collections import namedtuple
-from collections import OrderedDict
 from inspect import getargspec
 from inspect import getdoc
 from inspect import ismethod
@@ -39,11 +38,10 @@ class ToShellWithIt(object):
         if argspec.defaults:
             num_kw_args = len(argspec.defaults) if argspec.defaults else -1
             req_args = argspec.args[1:-num_kw_args]
-            opt_args = OrderedDict(
-                zip(argspec.args[-num_kw_args:], argspec.defaults))
+            opt_args = dict(zip(argspec.args[-num_kw_args:], argspec.defaults))
         else:
             req_args = argspec.args[1:]
-            opt_args = OrderedDict()
+            opt_args = {}
 
         return req_args, opt_args
 
