@@ -55,9 +55,8 @@ if __name__ == '__main__':
 
 #### Output
 ```
-$> ./toolset.py
-
-Usage: ./toolset.py command [args...]
+$> ./utils.py
+Usage: ./utils.py command [args...]
 
 Available commands and the parameters:
    help                                     [command]
@@ -66,7 +65,24 @@ Available commands and the parameters:
    tool_method_positional_and_keyword_args  pos_arg1 pos_arg2 [kw_arg1] [kw_arg2]
    tool_method_positional_args              pos_arg1 pos_arg2 
 
-$> ./toolset.py help tool_method_keyword_args
+$> ./utils.py help tool_method_keyword_args
 This method has keyword args (kw_arg1, kw_arg2).
 
+$> ./utils.py method_with_positional_args 1 2
+method_with_positional_args
+   pos_arg1: 1, pos_arg2: 2
+
+$> ./utils.py method_with_positional_and_keyword_args 1 kw_arg2=2 2
+method_with_positional_and_keyword_args
+   pos_arg1: 1, pos_arg2: 2
+   kw_arg1: default1, kw_arg2: 2
+
+$> echo $?
+0
+
+$> ./utils.py method_with_no_args 2
+Incorrect # of arguments for method_with_no_args
+
+$> echo $?
+1
 ```
