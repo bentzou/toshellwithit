@@ -16,6 +16,7 @@ class Utils:
         This method has positional args (pos_arg1, pos_arg2).
         """
         print("method_with_positional_args")
+        print("   pos_arg1: {0}, pos_arg2: {1}".format(pos_arg1, pos_arg2))
 
     @classmethod
     def method_with_keyword_args(cls, kw_arg1="default1", kw_arg2="default2"):
@@ -23,6 +24,7 @@ class Utils:
         This method has keyword args (kw_arg1, kw_arg2).
         """
         print("method_with_keyword_args")
+        print("   kw_arg1: {0}, kw_arg2: {1}".format(kw_arg1, kw_arg2))
 
     @classmethod
     def method_with_positional_and_keyword_args(
@@ -32,6 +34,8 @@ class Utils:
         (kw_arg1, kw_arg2).
         """
         print("method_with_positional_and_keyword_args")
+        print("   pos_arg1: {0}, pos_arg2: {1}".format(pos_arg1, pos_arg2))
+        print("   kw_arg1: {0}, kw_arg2: {1}".format(kw_arg1, kw_arg2))
 
 if __name__ == '__main__':
     from toshellwithit import ToShellWithIt
