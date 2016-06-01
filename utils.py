@@ -38,5 +38,5 @@ class Utils:
         print("   kw_arg1: {0}, kw_arg2: {1}".format(kw_arg1, kw_arg2))
 
 if __name__ == '__main__':
-    from toshellwithit import ToShellWithIt
-    ToShellWithIt(Utils).run()
+    import toshellwithit
+    toshellwithit.run(Utils)
