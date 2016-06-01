@@ -1,4 +1,5 @@
 from collections import namedtuple
+from collections import OrderedDict
 from inspect import getargspec
 from inspect import getdoc
 from inspect import ismethod
@@ -38,7 +39,8 @@ class ToShellWithIt(object):
         if argspec.defaults:
             num_kw_args = len(argspec.defaults) if argspec.defaults else -1
             req_args = argspec.args[1:-num_kw_args]
-            opt_args = dict(zip(argspec.args[-num_kw_args:], argspec.defaults))
+            opt_args = OrderedDict(
+                zip(argspec.args[-num_kw_args:], argspec.defaults))
         else:
             req_args = argspec.args[1:]
             opt_args = {}
@@ -60,7 +62,7 @@ class ToShellWithIt(object):
                 req_args_str = " " + " ".join(req_args) if req_args else ""
                 opt_args_str = " " + \
                     " ".join(
-                        ["[" + opt_arg + "]" for opt_arg in opt_args.keys()])
+                        ["[{0}={1}]".format(opt_arg, def_val) for opt_arg, def_val in opt_args.items()])
 
                 print("   {0:40s}{1}{2}".format(
                     command, req_args_str, opt_args_str))
@@ -91,7 +93,20 @@ class ToShellWithIt(object):
         if len(args) < len(req_args) or len(req_args) + len(opt_args) < len(args):
             raise Exception("Incorrect # of arguments for {0}\n".format(cmd))
 
-        return self.commands[cmd].method(*args, **kwargs)
+        for kwarg, kwval in kwargs.items():
+            if kwarg in opt_args:
+                if type(opt_args[kwarg]) is int:
+                    try:
+                        kwarg_cast = int(kwval)
+                        kwargs[kwarg] = kwarg_cast
+                    except:
+                        raise Exception(
+                            "Incorrect type for argument {0}\n".format(kwarg))
+
+        try:
+            return self.commands[cmd].method(*args, **kwargs)
+        except Exception, e:
+            raise Exception(str(e) + "\n")
 
     def run(self):
         # check for command
@@ -117,3 +132,7 @@ class ToShellWithIt(object):
         except Exception, e:
             sys.stderr.write(str(e))
             sys.exit(1)
+
+
+def run(cls):
+    ToShellWithIt(cls).run()
