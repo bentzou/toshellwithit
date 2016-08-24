@@ -100,8 +100,16 @@ class ToShellWithIt(object):
                         kwarg_cast = int(kwval)
                         kwargs[kwarg] = kwarg_cast
                     except:
-                        raise Exception(
-                            "Incorrect type for argument {0}\n".format(kwarg))
+                        raise Exception("Incorrect type for argument {0}\n".format(kwarg))
+                elif type(opt_args[kwarg]) is bool:
+                    if kwval.lower() == "true":
+                        kwarg_cast = True
+                    elif kwval.lower() == "false":
+                        kwarg_cast = False
+                    else:
+                        raise Exception("Incorrect type for argument {0}\n".format(kwarg))
+
+                    kwargs[kwarg] = kwarg_cast
 
         try:
             return self.commands[cmd].method(*args, **kwargs)
