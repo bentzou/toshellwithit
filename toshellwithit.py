@@ -1,3 +1,4 @@
+from __future__ import print_function
 from collections import namedtuple
 from collections import OrderedDict
 from inspect import getargspec
@@ -76,7 +77,7 @@ class ToShellWithIt(object):
         if not command:
             self.usage()
         elif command in self.commands:
-            print getdoc(self.commands[command].method)
+            print(getdoc(self.commands[command].method))
         else:
             raise Exception("{0} is not a valid command\n".format(command))
 
@@ -113,7 +114,7 @@ class ToShellWithIt(object):
 
         try:
             return self.commands[cmd].method(*args, **kwargs)
-        except Exception, e:
+        except Exception as e:
             raise Exception(str(e) + "\n")
 
     def run(self):
@@ -137,7 +138,7 @@ class ToShellWithIt(object):
             return_value = self.run_command(command, args, kwargs)
             if return_value:
                 print(json.dumps(return_value))
-        except Exception, e:
+        except Exception as e:
             sys.stderr.write(str(e))
             sys.exit(1)
 
